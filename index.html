@@ -1,0 +1,132 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1.0">
+  <title>智能化系统集成云平台</title>
+  <!-- <link rel="stylesheet" href="./static/css/leaflet.css"> -->
+  <!-- <script src="./static/bim/jssdk/BimfaceSDKLoader@latest-release.js" charset="utf-8"></script> -->
+  <!--<script src="./static/js/leaflet.ChineseTmsProviders.js" charset="utf-8"></script>-->
+  <!-- <link rel="stylesheet" href="https://cache.amap.com/lbs/static/main1119.css"/>
+    <script src="https://cache.amap.com/lbs/static/es5.min.js"></script>-->
+  <script src="https://webapi.amap.com/maps?v=1.4.9&key=e1a10a6226781abb20c833fe7488f5a3"></script>
+  <!-- <script src="./src/lib/map.min.js"></script> -->
+  <script src="http://webapi.amap.com/ui/1.0/main.js?v=1.0.11"></script>
+  <!-- <script type="text/javascript" src="https://cache.amap.com/lbs/static/addToolbar.js"></script>  -->
+  <!-- <script src="./src/lib/echarts/echarts.min.all.js"></script> -->
+  <!-- <script src="./src/lib/elementui/index.js"></script> -->
+
+ <!-- <script src="https://unpkg.com/vue/dist/vue.js"></script>
+ <script src="https://unpkg.com/element-ui/lib/index.js"></script> -->
+  <script>
+    (function (doc, win) {
+        var docEl = doc.documentElement;
+        var whdef = 100/1920;// 表示1920的设计图,使用100PX的默认值
+        var wH = win.innerHeight;// 当前窗口的高度
+        var wW = win.innerWidth;// 当前窗口的宽度
+        var rem = wW * whdef;// 以默认比例值乘以当前窗口宽度,得到该宽度下的相应FONT-SIZE值
+        docEl.style.fontSize = rem +'px'
+      })(document, window);
+
+      Date.prototype.Format = function (fmt) {
+        var o = {
+          "M+": this.getMonth() + 1, //月份
+          "d+": this.getDate(), //日
+          "h+": this.getHours(), //小时
+          "m+": this.getMinutes(), //分
+          "s+": this.getSeconds(), //秒
+          "q+": Math.floor((this.getMonth() + 3) / 3), //季度
+          "S": this.getMilliseconds() //毫秒
+        };
+        if (/(y+)/.test(fmt))
+          fmt = fmt.replace(RegExp.$1, (this.getFullYear() + "").substr(4 - RegExp.$1.length));
+        for (var k in o){
+          if (new RegExp("(" + k + ")").test(fmt)) {
+            fmt = fmt.replace(RegExp.$1, (RegExp.$1.length == 1) ? (o[k]) : (("00" + o[k]).substr(("" + o[k]).length)));
+          }
+        }
+        return fmt;
+      }
+
+    </script>
+  <link rel="stylesheet" type="text/css" href="./static/fonts/iconfont.css">
+  <link rel='icon' href='/static/images/home.png' type='image/x-ico' />
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+    }
+
+    html,
+    body {
+      width: 100%;
+      height: 100%;
+    }
+
+    body {
+      background: #030D21;
+      color: #FFF;
+      -moz-user-select: none;
+      /*火狐*/
+      -webkit-user-select: none;
+      /*webkit浏览器*/
+      -ms-user-select: none;
+      /*IE10*/
+      -khtml-user-select: none;
+      /*早期浏览器*/
+      user-select: none;
+    }
+
+    /*修改地图里弹框样式*/
+    .leaflet-popup {
+      color: #fff;
+      bottom: 10px !important;
+    }
+
+    .leaflet-popup-content-wrapper,
+    .leaflet-popup-tip {
+      background: rgba(16, 78, 123, 1);
+      opacity: 0.8;
+    }
+
+    .el-card__header {
+      border-bottom: solid 1px #0f315f !important;
+    }
+
+    .el-collapse-item__wrap {
+      border: none !important;
+    }
+
+    .el-collapse-item__header,
+    .el-collapse-item__content {
+      padding: 0 40px;
+    }
+
+
+    /*bimface样式修改*/
+    /* .bf-panel .bf-panel-body{
+        padding-top: 0px !important;
+      }
+      .bf-toolbar.bf-tree-toolbar{
+        height: 50px !important;
+      }
+      .bf-toolbar.bf-toolbar-bottom {
+        position: absolute;
+        left: 50%;
+        transform: translate(-50%, 0);
+        top: 0px !important;
+        height: 50px !important;
+      }
+      .bf-walk-panel{
+        bottom: 74px !important;
+      } */
+
+  </style>
+</head>
+
+<body>
+  <div id="app"></div>
+</body>
+
+</html>

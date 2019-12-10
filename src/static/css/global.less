@@ -1,0 +1,123 @@
+.ghy-box{
+  width: 100%;
+  height: calc(100% - 115px);
+  // position: fixed;
+  top: 66px;
+  left: 0;
+  z-index: 9;
+  background-color: #030d21;
+  font-size: 12px;
+
+  //头部
+  .header{
+    //color: #00ffff;
+    display: flex;
+    align-items: center;
+    justify-content: flex-start;
+    padding:20px 0 10px 10px;
+    font-size: 14px;
+  }
+
+  //选项条件
+  .filter{
+    position: relative;
+    border-top:1px solid #122d62 ;
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+    padding:0 10px;
+    width: calc(100% - 20px);
+    height: 80px;
+
+    .filter_line{
+      margin-right: 20px;
+      text-align: center;
+    }
+
+    button.search{
+      position: relative;
+      background-color: #1f4083;
+      border-radius: 5px;
+      color: white;
+      outline: none;
+      border: none;
+      cursor: pointer;
+      margin-left:25px;
+      height: 38px;
+      width: 95px;
+    }
+    //input.search{
+    //  background-color: #1f4083;
+    //  border-radius: 5px;
+    //  color: white;
+    //  outline: none;
+    //  border: none;
+    //  cursor: pointer;
+    //  margin-left:25px;
+    //  height:38px;
+    //  width: 114px;
+    //}
+
+  }
+
+  //列表
+  .list{
+    height: calc(100% - 90px);
+    color: #658bbe;
+    margin: 0 auto;
+    width: 98%;
+
+    .list-head{
+      background-color: #051b47;
+      height: 54px;
+      display: flex;
+
+      >div{
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        height: 100%;
+        font-size: 14px;
+        flex: 1;
+      }
+    }
+
+    .list-body{
+      position: relative;
+      height: calc(100% - 170px);
+      overflow-y: scroll;
+      overflow-x: hidden;
+      width: 100%;
+
+      .item{
+        display: flex;
+        border-bottom: 1px solid #122d62;
+        height:58px;
+        >div{
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          height: 100%;
+          font-size: 14px;
+          flex: 1;
+
+          >button{
+            border: none;
+            outline: none;
+            cursor: pointer;
+            border-radius: 5px;
+            letter-spacing: 5px;
+            background-color: #1e639e;
+            color: white;
+            width: 80px;
+            height: 30px;
+          }
+          >span{
+            cursor: pointer;
+          }
+        }
+
+      }
+    }
+  }
+}

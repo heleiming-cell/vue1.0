@@ -1,0 +1,136 @@
+.inspection-container {
+
+    .el-dialog .el-input,
+    .el-dialog .el-select {
+        width: 300px;
+    }
+
+    .el-form-item__content {
+        text-align: left;
+    }
+
+    .el-dialog,
+    .el-pager li {
+        background: #03265A;
+    }
+
+    .el-form-item {
+        margin-bottom: 0;
+    }
+
+    .el-dialog__body {
+        .el-form-item {
+            margin-bottom: 20px;
+        }
+    }
+
+    .el-table th,
+    .el-table tr {
+        background-color: transparent;
+    }
+
+    .el-table--border::after,
+    .el-table--group::after,
+    .el-table::before {
+        background-color: transparent;
+    }
+
+    .el-table,
+    .el-table__expanded-cell {
+        background-color: transparent;
+    }
+
+    .el-table__empty-block {
+        background-color: transparent;
+    }
+
+    .el-collapse {
+        width: auto !important;
+    }
+
+    .CronDialog{
+        .el-input,.el-select {
+            width:auto !important;
+        }
+        .cron{
+            background: transparent;
+        }
+        .el-tabs__item{
+            color: white;
+        }
+        .el-tabs__item.is-active {
+            color: #409EFF;
+        }
+        .el-tabs__active-bar.is-top{
+            width: 50px !important;
+        }
+        .el-tabs__content{
+            line-height: 40px;
+        }
+
+        .el-input-number__decrease, .el-input-number__increase{
+            background:transparent;
+            color: white;
+        }
+
+    }
+
+    .el-pagination.is-background .el-pager li:not(.disabled).active {
+        background-color: #409EFF !important;
+        color: #FFF;
+    }
+    .el-tree{
+        background: transparent !important;
+        color: white !important;
+    }
+    .el-tree-node:focus>.el-tree-node__content{
+        background: transparent;
+    }
+
+}
+.content-div {
+    .el-timeline-item {
+        text-align: left !important;
+    }
+
+    .el-timeline-item__content {
+        color: #E8F1FF !important;
+    }
+
+    .el-timeline-item__node {
+        background-color: #298EEC;
+    }
+
+    .el-timeline-item__tail {
+        border-left: 2px solid #298EEC;
+    }
+}
+/*定义滚动条高宽及背景 高宽分别对应横竖滚动条的尺寸*/
+::-webkit-scrollbar {
+    width: 2px;
+    height: 2px;
+    background-color: #04122C;
+}
+
+/*定义滚动条轨道 内阴影+圆角*/
+::-webkit-scrollbar-track {
+    -webkit-box-shadow: inset 0 0 1px #04122C;
+    border-radius: 1px;
+    background-color: #04122C;
+}
+
+/*定义滑块 内阴影+圆角*/
+::-webkit-scrollbar-thumb {
+    border-radius: 1px;
+    -webkit-box-shadow: inset 0 0 1px #04122C;
+    background-color: #0f9dff;
+}
+.parkTable {
+  .el-dialog__header {
+    padding: 10px 0;
+    border-bottom: none !important;
+    .el-dialog__title {
+      font-size: 16px !important;
+    }
+  }
+}

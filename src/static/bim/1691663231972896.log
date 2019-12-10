@@ -1,0 +1,95 @@
+2019-09-12 10:33:28,303 INFO  - -------------Starting Job 1691663231972896 Logger-------------
+2019-09-12 10:33:28,303 INFO  - Notice sended, jobId = 1691663231972896, status = download, code = null, message = null, usage = null
+2019-09-12 10:33:28,569 INFO  - File downloaded, size = -1, cost = 250
+2019-09-12 10:33:28,569 INFO  - Notice sended, jobId = 1691663231972896, status = execute, code = null, message = null, usage = null
+2019-09-12 10:33:28,569 INFO  - worker command = [python -u C:\Job\worker\local-databag\20190903-1bd4a0\framework/worker.py --workflow localpack/localpack.json --input "C:\Job\wd\1691663231972896\input\5e9c527686f722103a8ff335e8f1d0e0.zip" --config "C:\Job\wd\1691663231972896\input\config.json" --output "C:\Job\wd\1691663231972896\5cbded9f5eab83ee65baca1957cc6864"], job id = 1691663231972896
+2019-09-12 10:33:28,678 INFO  - WORKER OUTPUT: 3.6.1 (v3.6.1:69c0db5, Mar 21 2017, 18:41:36) [MSC v.1900 64 bit (AMD64)]
+2019-09-12 10:33:28,678 INFO  - WORKER OUTPUT: sys.version_info(major=3, minor=6, micro=1, releaselevel='final', serial=0)
+2019-09-12 10:33:28,678 INFO  - WORKER OUTPUT: C:\Job\wd\1691663231972896\input\config.json
+2019-09-12 10:33:28,678 INFO  - WORKER OUTPUT: Namespace(config=<__main__.CustomConfig object at 0x00000277472515F8>, configPath='C:\\Job\\wd\\1691663231972896\\input\\config.json', input='C:\\Job\\wd\\1691663231972896\\input\\5e9c527686f722103a8ff335e8f1d0e0.zip', links=None, maxLevel=None, maxTime=None, model='', output='C:\\Job\\wd\\1691663231972896\\5cbded9f5eab83ee65baca1957cc6864', rule=None, workflow='localpack/localpack.json')
+2019-09-12 10:33:28,678 INFO  - WORKER OUTPUT: {}
+2019-09-12 10:33:28,678 INFO  - WORKER OUTPUT: >> WORKFLOW: localpack/localpack.json
+2019-09-12 10:33:28,678 INFO  - WORKER OUTPUT: C:\Job\worker\local-databag\20190903-1bd4a0\7zip
+2019-09-12 10:33:28,678 INFO  - WORKER OUTPUT: C:\Job\worker\local-databag\20190903-1bd4a0\localpack
+2019-09-12 10:33:28,741 INFO  - WORKER OUTPUT: ___________________________________________
+2019-09-12 10:33:28,741 INFO  - WORKER OUTPUT: >> TASK START: localpack
+2019-09-12 10:33:28,741 INFO  - WORKER OUTPUT: Unzip: C:\Job\wd\1691663231972896\input\5e9c527686f722103a8ff335e8f1d0e0.zip -> C:\Job\wd\1691663231972896\5cbded9f5eab83ee65baca1957cc6864
+2019-09-12 10:33:28,757 INFO  - WORKER OUTPUT: 
+2019-09-12 10:33:28,757 INFO  - WORKER OUTPUT: 7-Zip [32] 16.02 : Copyright (c) 1999-2016 Igor Pavlov : 2016-05-21
+2019-09-12 10:33:28,757 INFO  - WORKER OUTPUT: 
+2019-09-12 10:33:28,757 INFO  - WORKER OUTPUT: Scanning the drive for archives:
+2019-09-12 10:33:28,757 INFO  - WORKER OUTPUT: 1 file, 3936308 bytes (3845 KiB)
+2019-09-12 10:33:28,757 INFO  - WORKER OUTPUT: 
+2019-09-12 10:33:28,757 INFO  - WORKER OUTPUT: Extracting archive: C:\Job\wd\1691663231972896\input\5e9c527686f722103a8ff335e8f1d0e0.zip
+2019-09-12 10:33:28,975 INFO  - WORKER OUTPUT: --
+2019-09-12 10:33:28,975 INFO  - WORKER OUTPUT: Path = C:\Job\wd\1691663231972896\input\5e9c527686f722103a8ff335e8f1d0e0.zip
+2019-09-12 10:33:28,975 INFO  - WORKER OUTPUT: Type = zip
+2019-09-12 10:33:28,975 INFO  - WORKER OUTPUT: Physical Size = 3936308
+2019-09-12 10:33:28,991 INFO  - WORKER OUTPUT: 
+2019-09-12 10:33:28,991 INFO  - WORKER OUTPUT: Everything is Ok
+2019-09-12 10:33:28,991 INFO  - WORKER OUTPUT: 
+2019-09-12 10:33:28,991 INFO  - WORKER OUTPUT: Folders: 44
+2019-09-12 10:33:28,991 INFO  - WORKER OUTPUT: Files: 185
+2019-09-12 10:33:28,991 INFO  - WORKER OUTPUT: Size:       7625913
+2019-09-12 10:33:28,991 INFO  - WORKER OUTPUT: Compressed: 3936308
+2019-09-12 10:33:28,991 INFO  - WORKER OUTPUT: Download: https://static.bimface.com/api/BimfaceSDKLoader/BimfaceSDKLoader@latest-release.js -> C:\Job\wd\1691663231972896\5cbded9f5eab83ee65baca1957cc6864\jssdk\BimfaceSDKLoader@latest-release.js
+2019-09-12 10:33:29,178 INFO  - WORKER OUTPUT: Download: https://static.bimface.com/api/Glodon/Bimface@3.4.71.zip -> C:\Job\wd\1691663231972896\input\Bimface@3.4.71.zip
+2019-09-12 10:33:29,413 INFO  - WORKER OUTPUT: Unzip: C:\Job\wd\1691663231972896\input\Bimface@3.4.71.zip -> C:\Job\wd\1691663231972896\5cbded9f5eab83ee65baca1957cc6864\jssdk
+2019-09-12 10:33:29,428 INFO  - WORKER OUTPUT: 
+2019-09-12 10:33:29,428 INFO  - WORKER OUTPUT: 7-Zip [32] 16.02 : Copyright (c) 1999-2016 Igor Pavlov : 2016-05-21
+2019-09-12 10:33:29,444 INFO  - WORKER OUTPUT: 
+2019-09-12 10:33:29,444 INFO  - WORKER OUTPUT: Scanning the drive for archives:
+2019-09-12 10:33:29,444 INFO  - WORKER OUTPUT: 1 file, 1621965 bytes (1584 KiB)
+2019-09-12 10:33:29,444 INFO  - WORKER OUTPUT: 
+2019-09-12 10:33:29,444 INFO  - WORKER OUTPUT: Extracting archive: C:\Job\wd\1691663231972896\input\Bimface@3.4.71.zip
+2019-09-12 10:33:29,522 INFO  - WORKER OUTPUT: --
+2019-09-12 10:33:29,522 INFO  - WORKER OUTPUT: Path = C:\Job\wd\1691663231972896\input\Bimface@3.4.71.zip
+2019-09-12 10:33:29,522 INFO  - WORKER OUTPUT: Type = zip
+2019-09-12 10:33:29,522 INFO  - WORKER OUTPUT: Physical Size = 1621965
+2019-09-12 10:33:29,522 INFO  - WORKER OUTPUT: 
+2019-09-12 10:33:29,522 INFO  - WORKER OUTPUT: Everything is Ok
+2019-09-12 10:33:29,522 INFO  - WORKER OUTPUT: 
+2019-09-12 10:33:29,522 INFO  - WORKER OUTPUT: Folders: 5
+2019-09-12 10:33:29,522 INFO  - WORKER OUTPUT: Files: 35
+2019-09-12 10:33:29,522 INFO  - WORKER OUTPUT: Size:       8525840
+2019-09-12 10:33:29,522 INFO  - WORKER OUTPUT: Compressed: 1621965
+2019-09-12 10:33:29,522 INFO  - WORKER OUTPUT: Download: https://static.bimface.com/api/Glodon/Drawing@1.4.70.zip -> C:\Job\wd\1691663231972896\input\Drawing@1.4.70.zip
+2019-09-12 10:33:29,772 INFO  - WORKER OUTPUT: Unzip: C:\Job\wd\1691663231972896\input\Drawing@1.4.70.zip -> C:\Job\wd\1691663231972896\5cbded9f5eab83ee65baca1957cc6864\jssdk
+2019-09-12 10:33:29,788 INFO  - WORKER OUTPUT: 
+2019-09-12 10:33:29,788 INFO  - WORKER OUTPUT: 7-Zip [32] 16.02 : Copyright (c) 1999-2016 Igor Pavlov : 2016-05-21
+2019-09-12 10:33:29,788 INFO  - WORKER OUTPUT: 
+2019-09-12 10:33:29,788 INFO  - WORKER OUTPUT: Scanning the drive for archives:
+2019-09-12 10:33:29,788 INFO  - WORKER OUTPUT: 1 file, 1514735 bytes (1480 KiB)
+2019-09-12 10:33:29,788 INFO  - WORKER OUTPUT: 
+2019-09-12 10:33:29,788 INFO  - WORKER OUTPUT: Extracting archive: C:\Job\wd\1691663231972896\input\Drawing@1.4.70.zip
+2019-09-12 10:33:29,866 INFO  - WORKER OUTPUT: --
+2019-09-12 10:33:29,866 INFO  - WORKER OUTPUT: Path = C:\Job\wd\1691663231972896\input\Drawing@1.4.70.zip
+2019-09-12 10:33:29,866 INFO  - WORKER OUTPUT: Type = zip
+2019-09-12 10:33:29,866 INFO  - WORKER OUTPUT: Physical Size = 1514735
+2019-09-12 10:33:29,866 INFO  - WORKER OUTPUT: 
+2019-09-12 10:33:29,866 INFO  - WORKER OUTPUT: Everything is Ok
+2019-09-12 10:33:29,866 INFO  - WORKER OUTPUT: 
+2019-09-12 10:33:29,866 INFO  - WORKER OUTPUT: Folders: 5
+2019-09-12 10:33:29,882 INFO  - WORKER OUTPUT: Files: 36
+2019-09-12 10:33:29,882 INFO  - WORKER OUTPUT: Size:       6997598
+2019-09-12 10:33:29,882 INFO  - WORKER OUTPUT: Compressed: 1514735
+2019-09-12 10:33:29,882 INFO  - WORKER OUTPUT: Download: https://api.bimface.com/data/internal/files/1691654541477376/tree?v=2.0 -> C:\Job\wd\1691663231972896\5cbded9f5eab83ee65baca1957cc6864\5e9c527686f722103a8ff335e8f1d0e0\data\tree.json
+2019-09-12 10:33:30,008 INFO  - WORKER OUTPUT: Download: https://api.bimface.com/data/internal/files/1691654541477376/floors?includeArea=true&includeRoom=true -> C:\Job\wd\1691663231972896\5cbded9f5eab83ee65baca1957cc6864\5e9c527686f722103a8ff335e8f1d0e0\data\spaces.json
+2019-09-12 10:33:30,038 INFO  - WORKER OUTPUT: Download: https://api.bimface.com/data/internal/files/1691654541477376/drawingsheets -> C:\Job\wd\1691663231972896\5cbded9f5eab83ee65baca1957cc6864\5e9c527686f722103a8ff335e8f1d0e0\data\drawingsheets.json
+2019-09-12 10:33:30,085 INFO  - WORKER OUTPUT: C:\Job\wd\1691663231972896\5cbded9f5eab83ee65baca1957cc6864\5e9c527686f722103a8ff335e8f1d0e0\property\modeldrive.db
+2019-09-12 10:33:30,085 INFO  - WORKER OUTPUT: Run MDB to JSON£º
+2019-09-12 10:33:30,085 INFO  - WORKER OUTPUT: C:\Job\worker\local-databag\20190903-1bd4a0\localpack\bin/mdb2json.exe --input "C:\Job\wd\1691663231972896\5cbded9f5eab83ee65baca1957cc6864\5e9c527686f722103a8ff335e8f1d0e0\property\modeldrive.db" --output "C:\Job\wd\1691663231972896\5cbded9f5eab83ee65baca1957cc6864\5e9c527686f722103a8ff335e8f1d0e0\property"
+2019-09-12 10:33:30,241 INFO  - WORKER OUTPUT: Writte to the Value.json.gz successfully!
+2019-09-12 10:33:30,272 INFO  - WORKER OUTPUT: Writte to the Schema.json.gz successfully!
+2019-09-12 10:33:30,444 INFO  - WORKER OUTPUT: write to the Families.json.gz successfully!
+2019-09-12 10:33:30,444 INFO  - WORKER OUTPUT: write to the FamilyTypeProperties.json.gz successfully!
+2019-09-12 10:33:30,444 INFO  - WORKER OUTPUT: write to the Elements.json.gz successfully!
+2019-09-12 10:33:30,444 INFO  - WORKER OUTPUT: write to the ElementProperties.json.gz successfully!
+2019-09-12 10:33:30,460 INFO  - WORKER OUTPUT: write to the BoundingBox.json.gz successfully!
+2019-09-12 10:33:30,460 INFO  - WORKER OUTPUT: db to json done!
+2019-09-12 10:33:30,460 INFO  - WORKER OUTPUT: 0
+2019-09-12 10:33:30,475 INFO  - WORKER OUTPUT: Clean up models...
+2019-09-12 10:33:30,475 INFO  - WORKER OUTPUT: Create viewToken.json
+2019-09-12 10:33:30,475 INFO  - WORKER OUTPUT: >> TASK END.
+2019-09-12 10:33:30,475 INFO  - WORKER OUTPUT: Worker finished with code 0
+2019-09-12 10:33:30,585 INFO  - Notice sended, jobId = 1691663231972896, status = upload, code = null, message = null, usage = null

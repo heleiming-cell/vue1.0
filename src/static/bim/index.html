@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>BimfaceApplication</title>
+  <style media="screen">
+    html,
+    body{
+      margin: 0;
+      padding: 0;
+      width: 100%;
+      height: 100%;
+    }
+    #view{
+      width: 100%;
+      height: 100%;
+    }
+  </style>
+  <script src="./jssdk/BimfaceSDKLoader@latest-release.js" charset="utf-8"></script>
+</head>
+<body>
+  <div id="view"></div>
+  <script type="text/javascript">
+  var viewer;
+  var BimfaceLoaderConfig = new BimfaceSDKLoaderConfig();
+  BimfaceLoaderConfig.dataEnvType = BimfaceEnvOption.Local;
+  BimfaceLoaderConfig.sdkPath = './jssdk';
+  BimfaceLoaderConfig.path = './viewToken.json';
+  
+    
+  BimfaceSDKLoader.load(BimfaceLoaderConfig,onSDKLoadSucceeded,onSDKLoadFailed);
+
+  function onSDKLoadSucceeded(viewMetaData){
+
+    if(viewMetaData.viewType == "drawingView"){
+       var view = document.getElementById('view');   
+        var WebAppConfig = new Glodon.Bimface.Application.WebApplicationDrawingConfig();
+        WebAppConfig.domElement = view;
+        var app = new Glodon.Bimface.Application.WebApplicationDrawing(WebAppConfig);
+       
+        viewer = app.getViewer();
+        viewer.addModel(viewMetaData);
+        
+    }else if(viewMetaData.viewType == "3DView"){
+      var view = document.getElementById('view')
+      var config = new Glodon.Bimface.Application.WebApplication3DConfig();
+      config.domElement = view;
+      var eventManager = Glodon.Bimface.Application.WebApplication3DEvent;
+      app = new Glodon.Bimface.Application.WebApplication3D(config);
+      viewer = app.getViewer();
+      viewer.addModel(viewMetaData);
+    }else if(viewMetaData.viewType =="rfaView"){
+      var view = document.getElementById('view')
+      var config = new Glodon.Bimface.Application.WebApplicationRfaConfig();
+      config.domElement = view;
+      var eventManager = Glodon.Bimface.Application.WebApplicationRfaEvent;
+      app = new Glodon.Bimface.Application.WebApplicationRfa(config);
+      viewer = app.getViewer();
+      viewer.addModel(viewMetaData);
+    }
+  };
+
+  function onSDKLoadFailed(error){
+	console.log("Failed to load SDK!");
+  };
+  </script>
+</body>
+</html>
