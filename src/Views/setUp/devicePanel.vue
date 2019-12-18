@@ -18,11 +18,11 @@
             </div>
             <div style="width:100%">
                 <div class="btngroup">
-                    <el-button type="primary" size="mini" v-show="node&&node.panelType&&node.panelType==='Custom'" @click="addCustom">添加</el-button>
-                    <el-button type="danger" size="mini" v-show="node&&node.panelType&&node.panelType==='Custom'" @click="delCustom">删除</el-button>
+                    <el-button type="primary" size="mini" v-show="node&&node.panelType&&(node.panelType==='Custom'||node.panelType=='device')" @click="addCustom">添加</el-button>
+                    <el-button type="danger"  size="mini" v-show="node&&node.panelType&&(node.panelType==='Custom'||node.panelType=='device')" @click="delCustom">删除</el-button>
                 </div>
                 <el-table @select-all="selctTable" @select="selctTable" v-show="tableData.length>0" :data="tableData" style="width: 100%">
-                    <el-table-column type="selection" width="55" v-if="node&&node.panelType&&node.panelType==='Custom'">
+                    <el-table-column type="selection" width="55" v-if="node&&node.panelType&&(node.panelType==='Custom'||node.panelType=='device')">
                     </el-table-column>
                     <el-table-column prop="n" label="序号">
                         <template slot-scope="scope">
@@ -33,8 +33,8 @@
                     </el-table-column>
                     <el-table-column prop="name" label="名称">
                         <template slot-scope="scope">
-                            <span v-show="node&&node.panelType&&node.panelType!=='Custom'">{{scope.row.name}}</span>
-                            <el-input size="mini" v-model="scope.row.name" v-show="node&&node.panelType&&node.panelType==='Custom'"></el-input>
+                            <span v-show="node&&node.panelType&&(node.panelType!=='Custom'&&node.panelType!='device')">{{scope.row.name}}</span>
+                            <el-input size="mini" v-model="scope.row.name" v-show="node&&node.panelType&&(node.panelType==='Custom'||node.panelType=='device')"></el-input>
                         </template>
                     </el-table-column>
                     <el-table-column prop="id" label="控件ID">
@@ -266,7 +266,7 @@ export default {
                 this.i = 0; //复位
                 if (this.node.panelType) {
                     this.src = imgs[this.node.panelType];
-                    if (this.node.panelType !== "Custom") {
+                    if (this.node.panelType !== "Custom"&&this.node.panelType!=="device") {
                         this.tableData = JSON.parse(JSON.stringify(panelConfig[this.node.panelType]));
                     }
                     this.$ajax.get(this.$URL + '/panel/PanelConfig', {
@@ -276,7 +276,7 @@ export default {
                     }).then((result) => {
                         if (result.status === 200 && result.data.success) {
                             if (result.data.data) {
-                                if (this.node.panelType === "Custom") {
+                                if (this.node.panelType === "Custom"||this.node.panelType=="device") {
                                     this.tableData = JSON.parse(result.data.data);
                                     this.loadPanelConfig();
                                     return;
@@ -292,7 +292,7 @@ export default {
                                 _this.bindobj = config;
                                 this.loadPanelConfig();
                             } else {
-                                if (this.node.panelType === "Custom")
+                                if (this.node.panelType === "Custom"||this.node.panelType=="device")
                                     this.tableData = [];
                             }
 
@@ -328,19 +328,19 @@ export default {
                 Object.assign(this.bindobj, {
                     [prop]: val,
                 });
-                if (this.node.panelType === "Custom") { //自定义模板,提前保存
+                if (this.node.panelType === "Custom"||this.node.panelType=="device") { //自定义模板,提前保存
                     this.tableData[this.i].var = val;
                 }
                 this.$ajax.get(this.$URL + '/panel/AddPanelConfig', {
                     params: {
                         id: this.node.key,
-                        config: this.node.panelType === "Custom" ? JSON.stringify(this.tableData) : JSON.stringify(this.bindobj),
+                        config: (this.node.panelType === "Custom"||this.node.panelType=="device") ? JSON.stringify(this.tableData) : JSON.stringify(this.bindobj),
                         panelType: this.node.panelType,
                         panelName: this.node.label
                     }
                 }).then((result) => {
                     if (result.status === 200 && result.data.success) {
-                        if (this.node.panelType !== "Custom") {
+                        if (this.node.panelType !== "Custom"&&this.node.panelType!=="device") {
                             this.tableData[this.i].var = val;
                         }
                     } else {
@@ -497,13 +497,13 @@ export default {
             this.$ajax.get(this.$URL + '/panel/AddPanelConfig', {
                 params: {
                     id: this.node.key,
-                    config: this.node.panelType === "Custom" ? JSON.stringify(this.tableData) : JSON.stringify(this.bindobj),
+                    config: (this.node.panelType === "Custom"||this.node.panelType=="device") ? JSON.stringify(this.tableData) : JSON.stringify(this.bindobj),
                     panelType: this.node.panelType,
                     panelName: this.node.label
                 }
             }).then((result) => {
                 if (result.status === 200 && result.data.success) {
-                    if (this.node.panelType !== "Custom") {
+                    if (this.node.panelType !== "Custom"&&this.node.panelType!=="device") {
                         //this.tableData[this.i].var = val;
                     }
                 } else {

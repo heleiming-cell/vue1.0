@@ -40,7 +40,7 @@
 </template>
 
 <script>
-import pagination from '@/components/common/pagination'
+import pagination from '@/components/common/pagination/index.js'
 export default {
     name: "userManager",
     components: {

@@ -30,6 +30,7 @@
         </div>
         <el-table :data="tableData" style="width: 100%" class="usertable">
             <el-table-column prop="Name" label="设备名称">
+          
             </el-table-column>
             <el-table-column label="设备类型">
                 <template slot-scope="scope">
@@ -58,7 +59,7 @@
 </template>
 
 <script>
-import pagination from '@/components/common/pagination'
+import pagination from '@/components/common/pagination/index.js'
 export default {
     name: "userManager",
     components: {
@@ -81,7 +82,6 @@ export default {
         }
     },
     mounted() {
-      
 
         this.loadRealData();
     },
@@ -103,19 +103,18 @@ export default {
                 }
             }).then((result) => {
                 if (result.status === 200 && result.data.success) {
-                    this.tableData=[];
-                    result.data.data.forEach(v=>{
-                        if(v.length)
-                        {
-                           this.tableData.push({
-                               time:v[0],
-                               devicetype:v[10],
-                               Name:v[12],
-                               value:v[13]
-                           })
+                    this.tableData = [];
+                    result.data.data.forEach(v => {
+                        if (v.length) {
+                            this.tableData.push({
+                                time: v[0],
+                                devicetype: v[8],
+                                Name: v[10],
+                                value: v[11]
+                            })
                         }
                     });
-                   // this.tableData = result.data.data;
+                    // this.tableData = result.data.data;
                     this.total = result.data.count;
                 }
             }).catch((err) => {
@@ -139,7 +138,7 @@ export default {
 }
 
 .h100 {
-    height:100%;
+    height: 100%;
     position: relative;
     padding: 10px;
 }

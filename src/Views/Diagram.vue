@@ -127,8 +127,7 @@ export default {
                             }
                         });
                     }
-                    if(second.length>0)
-                    {
+                    if (second.length > 0) {
                         this.LoadDiagram(second[0]);
                     }
                     if (first.length > 0)

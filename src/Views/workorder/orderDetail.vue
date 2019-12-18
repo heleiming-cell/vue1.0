@@ -381,6 +381,12 @@ export default {
                     this.actionFun(params);
                 });
             } else if (val == "审核") {
+                let files = [];
+                if (this.fileList) {
+                    this.fileList.forEach(v => {
+                        files.push(v.url);
+                    });
+                }
                 this.sendDialogVisible = false;
                 this.$confirm("本工单同意 " + this.Hangpeople + " 完成审核吗？", "提示", {
                     confirmButtonText: "确定",
@@ -392,7 +398,7 @@ export default {
                         Action: this.action,
                         Remark: "",
                         RelateId: "",
-                        Files: this.formData
+                        Files: files
                     };
                     this.actionFun(params);
                 });

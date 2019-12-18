@@ -14,8 +14,8 @@
             <span class="bar">|</span>
             <!-- <el-date-picker :type="datetype" size="mini" style="width:150px" v-model="startDate" placeholder="选择日期"></el-date-picker> -->
             <el-date-picker type="year" v-show="datetype=='year'" size="mini" style="width:150px" v-model="startDate" placeholder="选择日期"></el-date-picker>
-            <el-date-picker type="month" v-show="datetype=='month'"  size="mini" style="width:150px" v-model="startDate" placeholder="选择日期"></el-date-picker>
-            <el-date-picker type="date"  v-show="datetype=='date'" size="mini" style="width:150px" v-model="startDate" placeholder="选择日期"></el-date-picker>
+            <el-date-picker type="month" v-show="datetype=='month'" size="mini" style="width:150px" v-model="startDate" placeholder="选择日期"></el-date-picker>
+            <el-date-picker type="date" v-show="datetype=='date'" size="mini" style="width:150px" v-model="startDate" placeholder="选择日期"></el-date-picker>
             <span v-show="show">-</span>
             <el-date-picker v-show="show" type="date" size="mini" style="width:150px" v-model="endDate" placeholder="选择日期"></el-date-picker>
             <div class="btngroup">
@@ -44,19 +44,19 @@
                             <div class="tcircle center circle">
                                 <div class="innercircle center">
                                     <span>同比 <i v-show="sum1>sum3" class="iconfont icon-icon-arrow-top4" style="color:red;"></i>
-                                  <i v-show="sum1<sum3" class="iconfont icon-icon-arrow-btm4" style="color:green;"></i>
-                                  {{Math.abs(sum1-sum3).toFixed(2)}}</span><span>{{devicetype==1?'kwh':'m³'}}</span>
+                                        <i v-show="sum1<sum3" class="iconfont icon-icon-arrow-btm4" style="color:green;"></i>
+                                        {{Math.abs(sum1-sum3).toFixed(2)}}</span><span>{{devicetype==1?'kwh':'m³'}}</span>
                                 </div>
                             </div>
                             <div class="center hcircle circle">
                                 <span>环比<i v-show="sum1>sum2" class="iconfont icon-icon-arrow-top4" style="color:red;"></i>
-                                  <i v-show="sum1<sum2" class="iconfont icon-icon-arrow-btm4" style="color:green;"></i>{{Math.abs(sum1-sum2).toFixed(2)}}</span><span>{{devicetype==1?'kwh':'m³'}}</span>
+                                    <i v-show="sum1<sum2" class="iconfont icon-icon-arrow-btm4" style="color:green;"></i>{{Math.abs(sum1-sum2).toFixed(2)}}</span><span>{{devicetype==1?'kwh':'m³'}}</span>
                             </div>
                         </div>
                         <div>
-                            <span class="num">总能耗:{{sum1.toFixed(2)}}</span>
-                            <span class="num">最大值:{{max.toFixed(2)}}</span>
-                            <span class="num">最小值:{{min.toFixed(2)}}</span>
+                            <span class="num">总能耗:{{sum1}}</span>
+                            <span class="num">最大值:{{max}}</span>
+                            <span class="num">最小值:{{min}}</span>
                             <span class="num">平均值:{{average.toFixed(2)}}</span>
                         </div>
                     </div>
@@ -202,13 +202,13 @@ export default {
             } else if (this.datetype == "month") {
                 option.legend.data = [this.startDate.format("yyyy-MM"), "上月当天"];
                 option.xAxis[0].data = [];
-                for (let i = 1; i <= new Date(new Date().getFullYear(), new Date().getMonth() + 1, 0).getDate(); i++) {
+                for (let i = 0; i <= new Date(new Date().getFullYear(), new Date().getMonth() + 1, 0).getDate(); i++) {
                     option.xAxis[0].data.push(i + "日");
                 }
             } else if (this.datetype == "year") {
                 option.legend.data = [this.startDate.format("yyyy"), "去年同月"];
                 option.xAxis[0].data = [];
-                for (let i = 1; i <= 12; i++) {
+                for (let i = 0; i <= 12; i++) {
                     option.xAxis[0].data.push(i + "月");
                 }
             }
@@ -217,9 +217,9 @@ export default {
             let _this = this;
             let option = _this.chart1.getOption();
             this.getXaisData(option);
-            option.series[0].data = result.data.data1;
+            option.series[0].data = this.data1;
             option.series[0].name = this.startDate.format("yyyy-MM-dd");
-            option.series[1].data = result.data.data2;
+            option.series[1].data = this.data2;
             option.series[1].name = option.legend.data[1];
             _this.chart1.setOption(option);
         },
@@ -230,12 +230,21 @@ export default {
                 option.legend.data = [];
                 let sum = 0;
                 result.data.data.forEach((v, i) => {
-                    option.legend[0].data.push(v.name);
-                    sum += v.value ? parseFloat(v.value) : 0;
+                    option.legend[0].data.push(v[1]);
+                    sum += v[2] ? parseFloat(v[2]) : 0;
                 });
-                option.title[0].subtext = sum.toFixed(2) + (this.devicetype == 1 ? 'kwh' : 'm³');;
+                option.title[0].subtext = sum.toFixed(2) + (this.devicetype == 1 ? 'kwh' : 'm³');
                 //   option.series[0].data = result.data.data;
-                option.series[0].data = result.data.data;
+                let data = [];
+                if (result.data.data) {
+                    result.data.data.forEach(v => {
+                        data.push({
+                            value: v[2],
+                            name: v[1]
+                        });
+                    });
+                }
+                option.series[0].data = data;
                 _this.chart2.setOption(option);
             }
         },
@@ -274,35 +283,39 @@ export default {
             let _this = this;
             this.max = 0;
             this.min = 0;
-            result.data.data1.forEach((v, i) => {
-                if(i==0)
-                {
-                    _this.min=v;
-                }
-                let obj = {
-                    time: '',
-                    type: _this.devicetype == 1 ? "电" : "水",
-                    val: v,
-                    categoryname: this.category ? this.category.split('|')[1] : '',
-                };
-                if (_this.max < v) {
-                    _this.max = v;
-                }
-                if (_this.min > v) {
-                    _this.min = v;
-                }
-                if (_this.datetype === "date") {
-                    obj.time = _this.startDate.format("yyyy-MM-dd") + " " + i + ":00";
-                    _this.average = result.data.sum1 / 24;
-                } else if (_this.datetype === "month") {
-                    obj.time = _this.startDate.format("yyyy-MM-") + (i + 1);
-                    _this.average = result.data.sum1 / new Date(new Date().getFullYear(), new Date().getMonth() + 1, 0).getDate();
-                } else if (_this.datetype === "year") {
-                    obj.time = _this.startDate.format("yyyy-") + (i + 1);
-                    _this.average = result.data.sum1 / 12;
-                }
-                _this.tableData.push(obj);
-            });
+            this.average = 0;
+            if (result.data.data1) {
+                result.data.data1.forEach((v, i) => {
+                    v = (v && v.length == 1) ? v[0] : v;
+                    if (i == 0) {
+                        _this.min = v[1];
+                    }
+                    let obj = {
+                        time: '',
+                        type: _this.devicetype == 1 ? "电" : "水",
+                        val: v[1],
+                        categoryname: this.category ? this.category.split('|')[1] : '',
+                    };
+                    if (_this.max < v[1]) {
+                        _this.max = v[1];
+                    }
+                    if (_this.min > v[1]) {
+                        _this.min = v[1];
+                    }
+                    if (_this.datetype === "date") {
+                        obj.time = _this.startDate.format("yyyy-MM-dd") + " " + i + ":00";
+                        _this.average = _this.sum1 / 24;
+                    } else if (_this.datetype === "month") {
+                        obj.time = _this.startDate.format("yyyy-MM-") + (i + 1);
+                        _this.average = _this.sum1 / new Date(new Date().getFullYear(), new Date().getMonth() + 1, 0).getDate();
+                    } else if (_this.datetype === "year") {
+                        obj.time = _this.startDate.format("yyyy-") + (i + 1);
+                        _this.average = _this.sum1 / 12;
+                    }
+                    _this.tableData.push(obj);
+                });
+            }
+
         },
         loadDeviceEnergys() {
             let _this = this;
@@ -316,12 +329,61 @@ export default {
                 })
                 .then(result => {
                     if (result.status === 200 && result.data.success) {
+                        if (this.datetype == "date") {
+                            _this.data1 = new Array(24);
+                            _this.data2 = new Array(24);
+                        } else if (this.datetype == "month") {
+                            var date = new Date();
+                            _this.data1 = new Array(new Date(date.getFullYear(), date.getMonth() + 1, 0).getDate());
+                            _this.data2 = new Array(new Date(date.getFullYear(), date.getMonth() + 1, 0).getDate());
+                        } else if (this.datetype == "year") {
+                            _this.data1 = new Array(12);
+                            _this.data2 = new Array(12);
+                        }
+                        _this.data1.fill(0);
+                        _this.data2.fill(0);
+                        if (result.data.data1[0]) {
+                            _this.sum1 = 0;
+                            result.data.data1.forEach(v => {
+                                _this.sum1 += v[0][1];
+                                let index;
+                                if (this.datetype == "date") {
+                                    index = parseInt(v[0][2].split(' ')[1].split(':')[0]);
+                                } else if (this.datetype == "month") {
+                                    index = parseInt(v[0][2].split(' ')[0].split('-')[2]);
+                                } else if (this.datetype == "year") {
+                                    index = parseInt(v[0][2].split(' ')[0].split('-')[1]);
+                                }
+                                _this.data1[index] = v[0][1];
+                            });
+                        }
+                        if (result.data.data2[0]) {
+                            _this.sum2 = 0;
+                            result.data.data2.forEach(v => {
+                                _this.sum2 += v[0][1];
+                                let index;
+                                if (this.datetype == "date") {
+                                    index = parseInt(v[0][2].split(' ')[1].split(':')[0]);
+                                } else if (this.datetype == "month") {
+                                    index = parseInt(v[0][2].split(' ')[0].split('-')[2]);
+                                } else if (this.datetype == "year") {
+                                    index = parseInt(v[0][2].split(' ')[0].split('-')[1]);
+                                }
+                                _this.data2[index] = v[0][1]
+                            });
+                        }
+                        if (result.data.data3[0]) {
+                            _this.sum3 = 0;
+                            result.data.data3.forEach(v => {
+                                _this.sum3 += v[0][1];
+                            });
+                        }
                         this.updatedChart(result);
                         _this.tableData = [];
                         _this.showTable(result);
-                        this.sum1 = result.data.sum1;
-                        this.sum2 = result.data.sum2;
-                        this.sum3 = result.data.sum3;
+                        // this.sum1 = result.data.sum1;
+                        // this.sum2 = result.data.sum2;
+                        // this.sum3 = result.data.sum3;
                     }
                 })
                 .catch(err => {});
@@ -339,12 +401,51 @@ export default {
                 })
                 .then(result => {
                     if (result.status === 200 && result.data.success) {
-                        this.updatedChart(result);
+                        if (this.datetype == "date") {
+                            _this.data1 = new Array(24);
+                            _this.data2 = new Array(24);
+                        } else if (this.datetype == "month") {
+                            var date = new Date();
+                            _this.data1 = new Array(new Date(date.getFullYear(), date.getMonth() + 1, 0).getDate());
+                            _this.data2 = new Array(new Date(date.getFullYear(), date.getMonth() + 1, 0).getDate());
+                        } else if (this.datetype == "year") {
+                            _this.data1 = new Array(12);
+                            _this.data2 = new Array(12);
+                        }
+                        _this.data1.fill(0);
+                        _this.data2.fill(0);
+                        if (result.data.data1) {
+                            result.data.data1.forEach(v => {
+                                let index;
+                                if (this.datetype == "date") {
+                                    index = parseInt(v[2].split(' ')[1].split(':')[0]);
+                                } else if (this.datetype == "month") {
+                                    index = parseInt(v[2].split(' ')[0].split('-')[2]);
+                                } else if (this.datetype == "year") {
+                                    index = parseInt(v[2].split(' ')[0].split('-')[1]);
+                                }
+                                _this.data1[index] = v[1];
+                            });
+                        }
+                        if (result.data.data2) {
+                            result.data.data2.forEach(v => {
+                                let index;
+                                if (this.datetype == "date") {
+                                    index = parseInt(v[2].split(' ')[1].split(':')[0]);
+                                } else if (this.datetype == "month") {
+                                    index = parseInt(v[2].split(' ')[0].split('-')[2]);
+                                } else if (this.datetype == "year") {
+                                    index = parseInt(v[2].split(' ')[0].split('-')[1]);
+                                }
+                                _this.data2[index] = v[1]
+                            });
+                        }
                         _this.tableData = [];
                         _this.showTable(result);
                         this.sum1 = result.data.sum1;
                         this.sum2 = result.data.sum2;
                         this.sum3 = result.data.sum3;
+                        this.updatedChart(result);
                     }
                 })
                 .catch(err => {

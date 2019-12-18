@@ -122,8 +122,8 @@ export default {
             sum1: 0,
             sum2: 0,
             sum3: 0,
-            data1:[],
-            data2:[],
+            data1: [],
+            data2: [],
         };
     },
     mounted() {
@@ -201,13 +201,13 @@ export default {
             } else if (this.datetype == "month") {
                 option.legend.data = [this.startDate.format("yyyy-MM"), "上月当天"];
                 option.xAxis[0].data = [];
-                for (let i = 1; i <= new Date(new Date().getFullYear(), new Date().getMonth() + 1, 0).getDate(); i++) {
+                for (let i = 0; i <= new Date(new Date().getFullYear(), new Date().getMonth() + 1, 0).getDate(); i++) {
                     option.xAxis[0].data.push(i + "日");
                 }
             } else if (this.datetype == "year") {
                 option.legend.data = [this.startDate.format("yyyy"), "去年同月"];
                 option.xAxis[0].data = [];
-                for (let i = 1; i <= 12; i++) {
+                for (let i = 0; i <= 12; i++) {
                     option.xAxis[0].data.push(i + "月");
                 }
             }
@@ -217,7 +217,15 @@ export default {
             let option = _this.chart1.getOption();
             this.getXaisData(option);
             option.series[0].data = this.data1;
-            option.series[0].name = this.startDate.format("yyyy-MM-dd");
+            let name = "";
+            if (this.datetype == "date") {
+                name = this.startDate.format("yyyy-MM-dd")
+            } else if (this.datetype == "month") {
+                name = "本月";
+            } else if (this.datetype == "year") {
+                name = "本年"
+            }
+            option.series[0].name = name;
             option.series[1].data = this.data2;
             option.series[1].name = option.legend.data[1];
             _this.chart1.setOption(option);
@@ -279,34 +287,38 @@ export default {
             let _this = this;
             this.max = 0;
             this.min = 0;
-            result.data.data1.forEach((v, i) => {
-                if (i == 0) {
-                    _this.min = v[1];
-                }
-                let obj = {
-                    time: '',
-                    type: _this.devicetype == 1 ? "电" : "水",
-                    val: v[1],
-                    areaname: this.area ? this.area.split('|')[1] : ''
-                };
-                if (_this.max < v[1]) {
-                    _this.max = v[1];
-                }
-                if (_this.min > v[1]) {
-                    _this.min = v[1];
-                }
-                if (_this.datetype === "date") {
-                    obj.time = _this.startDate.format("yyyy-MM-dd") + " " + i + ":00";
-                    _this.average = _this.sum1 / 24;
-                } else if (_this.datetype === "month") {
-                    obj.time = _this.startDate.format("yyyy-MM-") + (i + 1);
-                    _this.average = _this.sum1 / new Date(new Date().getFullYear(), new Date().getMonth() + 1, 0).getDate();
-                } else if (_this.datetype === "year") {
-                    obj.time = _this.startDate.format("yyyy-") + (i + 1);
-                    _this.average = _this.sum1 / 12;
-                }
-                // _this.tableData.push(obj);
-            });
+            this.average = 0;
+            if (result.data.data1) {
+                result.data.data1.forEach((v, i) => {
+                    v = (v && v.length == 1) ? v[0] : v;
+                    if (i == 0) {
+                        _this.min = v[1];
+                    }
+                    let obj = {
+                        time: '',
+                        type: _this.devicetype == 1 ? "电" : "水",
+                        val: v[1],
+                        areaname: this.area ? this.area.split('|')[1] : ''
+                    };
+                    if (_this.max < v[1]) {
+                        _this.max = v[1];
+                    }
+                    if (_this.min > v[1]) {
+                        _this.min = v[1];
+                    }
+                    if (_this.datetype === "date") {
+                        obj.time = _this.startDate.format("yyyy-MM-dd") + " " + i + ":00";
+                        _this.average = _this.sum1 / 24;
+                    } else if (_this.datetype === "month") {
+                        obj.time = _this.startDate.format("yyyy-MM-") + (i + 1);
+                        _this.average = _this.sum1 / new Date(new Date().getFullYear(), new Date().getMonth() + 1, 0).getDate();
+                    } else if (_this.datetype === "year") {
+                        obj.time = _this.startDate.format("yyyy-") + (i + 1);
+                        _this.average = _this.sum1 / 12;
+                    }
+                    // _this.tableData.push(obj);
+                });
+            }
         },
         loadDeviceEnergys() {
             let _this = this;
@@ -320,30 +332,58 @@ export default {
                 })
                 .then(result => {
                     if (result.status === 200 && result.data.success) {
-                        this.updatedChart(result);
 
-                        if (result.data.data1) {
-                            _this.sum1=0;
-                            _this.data1=[];
+                        if (this.datetype == "date") {
+                            _this.data1 = new Array(24);
+                            _this.data2 = new Array(24);
+                        } else if (this.datetype == "month") {
+                            var date = new Date();
+                            _this.data1 = new Array(new Date(date.getFullYear(), date.getMonth() + 1, 0).getDate());
+                            _this.data2 = new Array(new Date(date.getFullYear(), date.getMonth() + 1, 0).getDate());
+                        } else if (this.datetype == "year") {
+                            _this.data1 = new Array(12);
+                            _this.data2 = new Array(12);
+                        }
+                        _this.data1.fill(0);
+                        _this.data2.fill(0);
+                        if (result.data.data1[0]) {
+                            _this.sum1 = 0;
                             result.data.data1.forEach(v => {
-                                _this.sum1 += v[1];
-                                _this.data1.push(v[1])
+                                _this.sum1 += v[0][1];
+                                let index;
+                                if (this.datetype == "date") {
+                                    index = parseInt(v[0][2].split(' ')[1].split(':')[0]);
+                                } else if (this.datetype == "month") {
+                                    index = parseInt(v[0][2].split(' ')[0].split('-')[2]);
+                                } else if (this.datetype == "year") {
+                                    index = parseInt(v[0][2].split(' ')[0].split('-')[1]);
+                                }
+                                _this.data1[index] = v[0][1];
                             });
                         }
-                        if (result.data.data2) {
-                             _this.sum2=0;
-                            _this.data2=[];
+                        if (result.data.data2[0]) {
+                            _this.sum2 = 0;
                             result.data.data2.forEach(v => {
-                                _this.sum2 += v[1];
-                                _this.data2.push(v[1]);
+                                _this.sum2 += v[0][1];
+                                let index;
+                                if (this.datetype == "date") {
+                                    index = parseInt(v[0][2].split(' ')[1].split(':')[0]);
+                                } else if (this.datetype == "month") {
+                                    index = parseInt(v[0][2].split(' ')[0].split('-')[2]);
+                                } else if (this.datetype == "year") {
+                                    index = parseInt(v[0][2].split(' ')[0].split('-')[1]);
+                                }
+                                _this.data2[index] = v[0][1]
                             });
                         }
-                        if (result.data.data3) {
-                             _this.sum3=0;
+                        if (result.data.data3[0]) {
+                            _this.sum3 = 0;
                             result.data.data3.forEach(v => {
-                                _this.sum3 += v[1];
+                                _this.sum3 += v[0][1];
                             });
                         }
+
+                        this.updatedChart(result);
                         _this.tableData = [];
                         _this.showTable(result);
                     }
@@ -363,6 +403,47 @@ export default {
                 })
                 .then(result => {
                     if (result.status === 200 && result.data.success) {
+                        if (this.datetype == "date") {
+                            _this.data1 = new Array(24);
+                            _this.data2 = new Array(24);
+                        } else if (this.datetype == "month") {
+                            var date = new Date();
+                            _this.data1 = new Array(new Date(date.getFullYear(), date.getMonth() + 1, 0).getDate());
+                            _this.data2 = new Array(new Date(date.getFullYear(), date.getMonth() + 1, 0).getDate());
+                        } else if (this.datetype == "year") {
+                            _this.data1 = new Array(12);
+                            _this.data2 = new Array(12);
+                        }
+                        _this.data1.fill(0);
+                        _this.data2.fill(0);
+                        if (result.data.data1) {
+                            result.data.data1.forEach(v => {
+                                // let index = parseInt(v[2].split(' ')[1].split(':')[0]);
+                                let index;
+                                if (this.datetype == "date") {
+                                    index = parseInt(v[2].split(' ')[1].split(':')[0]);
+                                } else if (this.datetype == "month") {
+                                    index = parseInt(v[2].split(' ')[0].split('-')[2]);
+                                } else if (this.datetype == "year") {
+                                    index = parseInt(v[2].split(' ')[0].split('-')[1]);
+                                }
+                                _this.data1[index] = v[1];
+                            });
+                        }
+                        if (result.data.data2) {
+                            result.data.data2.forEach(v => {
+                                let index;
+                                if (this.datetype == "date") {
+                                    index = parseInt(v[2].split(' ')[1].split(':')[0]);
+                                } else if (this.datetype == "month") {
+                                    index = parseInt(v[2].split(' ')[0].split('-')[2]);
+                                } else if (this.datetype == "year") {
+                                    index = parseInt(v[2].split(' ')[0].split('-')[1]);
+                                }
+                                // let index = parseInt(v[2].split(' ')[1].split(':')[0]);
+                                _this.data2[index] = v[1]
+                            });
+                        }
                         this.updatedChart(result);
                         _this.tableData = [];
                         _this.showTable(result);
@@ -423,9 +504,7 @@ export default {
             this.loadAllAreaEnergys();
             this.loadSingleAreaEnergys();
         },
-        dateFoucus() {
-
-        }
+     
     }
 };
 </script>

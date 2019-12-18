@@ -65,11 +65,12 @@ Vue.prototype.$QS = qs
 // https://ipm.pgjn.com.cn
 // Vue.prototype.$URL = "http://" + window.location.hostname + ":6003";
 // Vue.prototype.$URL = "https://ipm.pgjn.com.cn:6003";
-// Vue.prototype.$URL = "https://ipm.pgjn.com.cn:6003";
- Vue.prototype.$URL = "http://localhost:6003";
+Vue.prototype.$URL = "https://ipm.pgjn.com.cn:6003";
+//  Vue.prototype.$URL = "http://localhost:6003";
 Vue.prototype.$SHEDULEURL = "http://" + window.location.hostname + ":6005";
 Vue.prototype.$DMURL = "http://" + window.location.hostname + ":6711";
 Vue.prototype.$Order = "https://ipm.pgjn.com.cn:1142";
+// Vue.prototype.$Order = "http://localhost:5000";
 // Vue.prototype.$URL = "http://117.184.65.46:6003";
 // Vue.prototype.$Order = "http://117.184.65.46:1142";
 // Vue.prototype.$URL = process.env.baseurl
@@ -128,9 +129,7 @@ new Vue({
     App
   },
   template: '<App/>',
-  created() {
-    // alert(123);
-  },
+
   methods: {
     ...mapMutations(['updateConnection', 'updateAlarmData']),
   },
@@ -139,124 +138,60 @@ new Vue({
 
     }
   },
-  mounted() {
-    let _this = this;
+  // mounted() {
+  //   let _this = this;
     
-    var connection = new signalR.HubConnectionBuilder().
-      // withUrl("http://"+location.hostname+":9005/scada")
-      withUrl("http://localhost:9005/scada")
-      .build();
+  //   var connection = new signalR.HubConnectionBuilder().
+  //     // withUrl("http://"+location.hostname+":9005/scada")
+  //     withUrl("http://localhost:9005/scada")
+  //     .build();
+  //   connection.on('onVarsChangedCallback', function (data) {
+  //     if (data) {
+  //       data = JSON.parse(data);
+  //       if (data.success && data.data && data.data.length > 0) {
+  //         _this.$store.commit('updateRealData', data.data);
+  //       }
+  //     }
 
+  //   });
+  //   connection.on('onChangeRoute', function (data) { //手机端切换
+  //     if (data) {
+  //       _this.$store.commit('change_routename', data);
+  //     }
+  //   });
+  //   connection.on('getHisAlarm', function (data) {
+  //     if(data)
+  //     {
+  //       _this.updateAlarmData(JSON.parse(data))
+  //     }
+  //   });
+  //   connection.on('getRealAlarm', function (data) {
+  //     if (data) {
+  //       data = JSON.parse(data);
+  //       if (data  && data.length > 0) {
+  //         _this.updateAlarmData(data);
+  //         if (_this.$store.state.app.openAlarm) {
+  //           _this.$store.commit('change_alarmlist', true);
+  //           _this.$store.commit('change_alarmlink', true);
+  //         }
 
-    //全局订阅，订阅全局报警
-  //  let connection = $.hubConnection();
-    // connection.url = "http://"+location.hostname+":9005/signalr";
-  //  connection.url = "http://171.221.238.16:8005/signalr";
-   // let contosoChatHubProxy = connection.createHubProxy('alarmhub');
-  //  let scadaHub = connection.createHubProxy('scadahub');
-    // connection.reconnected(function () {
-    //   _this.updateConnection({
-    //     isconnection: false,
-    //   });
-    //   connection.start().done(function () {
-    //     console.log("连接成功----" + connection.id);
-    //     contosoChatHubProxy.invoke('sendHisAlarm');
-    //     _this.updateConnection({
-    //       connection,
-    //       hubproxy: contosoChatHubProxy,
-    //       scadaHub: scadaHub,
-    //       isconnection: true,
-    //     });
-    //   });
-    // });
-    // connection.disconnected(function () {
-    //   _this.updateConnection({
-    //     isconnection: false,
-    //   });
-    //   connection.start().done(function () {
-    //     console.log("连接成功----" + connection.id);
-    //     contosoChatHubProxy.invoke('sendHisAlarm');
-    //     _this.updateConnection({
-    //       connection,
-    //       hubproxy: contosoChatHubProxy,
-    //       scadaHub: scadaHub,
-    //       isconnection: true,
-    //     });
-    //   });
-    // });
-    connection.on('onVarsChangedCallback', function (data) {
-      if (data) {
-        data = JSON.parse(data);
-        if (data.success && data.data && data.data.length > 0) {
-          _this.$store.commit('updateRealData', data.data);
-        }
-      }
+  //         _this.$store.commit('change_linkinfo', data[0]);
 
-    });
-    connection.on('onChangeRoute', function (data) { //手机端切换
-      if (data) {
-        _this.$store.commit('change_routename', data);
-      }
-    });
-    // scadaHub.on('onChangeSystemID', function (data) { //手机端切换
-    //   if (data) {
-    //     if (data == "1010") {
-    //       _this.$store.commit('change_systemid', null);
-    //       setTimeout(function () {
-    //         _this.$store.commit('change_systemid', data);
-    //         return;
-    //       }, 0);
-    //     } else
-    //       _this.$store.commit('change_systemid', data);
-    //   }
-    // });
-    // contosoChatHubProxy.on('addContosoChatMessageToPage', function (name, message) {
-    //   console.log(name + ' ' + message);
-    // });
-    connection.on('getHisAlarm', function (data) {
-      if(data)
-      {
-        _this.updateAlarmData(JSON.parse(data))
-      }
-    });
-    connection.on('getRealAlarm', function (data) {
-      if (data) {
-        data = JSON.parse(data);
-        if (data  && data.length > 0) {
-          _this.updateAlarmData(data);
-          if (_this.$store.state.app.openAlarm) {
-            _this.$store.commit('change_alarmlist', true);
-            _this.$store.commit('change_alarmlink', true);
-          }
+  //       }
+  //     }
 
-          _this.$store.commit('change_linkinfo', data[0]);
+  //   });
+  //   connection.start().then(result=>{
+  //      if(connection.state===1)
+  //      {
+  //        console.log("连接成功")
+  //      }
+  //     connection.invoke('SendHisAlarm');
+  //     _this.updateConnection({
+  //       connection,
+  //       isconnection: true,
+  //     });
+  //   });
 
-        }
-      }
-
-    });
-    // contosoChatHubProxy.on('getAlarmReset', function (Msg) {
-    //   if (Msg) {
-    //     Msg = JSON.parse(Msg);
-    //     if (Msg && Msg.success) {
-    //       contosoChatHubProxy.invoke('sendHisAlarm')
-    //     }
-    //   }
-
-    // });
-    connection.start().then(result=>{
-       if(connection.state===1)
-       {
-         console.log("连接成功")
-       }
-      connection.invoke('SendHisAlarm');
-      _this.updateConnection({
-        connection,
-        // hubproxy: contosoChatHubProxy,
-        // scadaHub: scadaHub,
-        isconnection: true,
-      });
-    });
-
-  }
+  // }
 })

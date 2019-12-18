@@ -36,7 +36,7 @@
     </div>
     <pagiNation v-show="listQuery.total>0" :total="listQuery.total" :page.sync="listQuery.page" :limit.sync="listQuery.limit" @pagination="getList" />
     <!-- 设备详情 -->
-    <el-dialog title="编辑设备" :visible.sync="dialogVisible" v-if="dialogVisible" >
+    <el-dialog title="编辑设备" :visible.sync="dialogVisible" v-if="dialogVisible">
         <div class="dialogDetail">
             <el-form :model="dialogForm" :label-width="'120px'" :inline="true" style="text-align: left;" :rules="rules" ref="ruleForm">
                 <el-form-item label="设备名称：" prop="Name">
@@ -182,7 +182,7 @@ export default {
                 "Unit": "",
                 VarStatus: "",
                 VarAlarm: "",
-                PanelType:''
+                PanelType: ''
             },
             rules: {
                 Name: [{
@@ -303,8 +303,8 @@ export default {
                     "RelateId": 0,
                     "State": "",
                     "Unit": "",
-                    VarStatus: "",
-                    VarAlarm: ""
+                    "VarStatus": "",
+                    "VarAlarm": ""
                 }
                 this.dialogVisible = true
             } else {

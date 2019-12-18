@@ -6,14 +6,15 @@ import Cookies from 'js-cookie'
 
 // create an axios instance
 const service = axios.create({
- //baseURL: location.protocol + "//" + "117.184.65.46:1142", // api 的 base_url
+  //baseURL: location.protocol + "//" + "117.184.65.46:1142", // api 的 base_url
 
- baseURL: "https://ipm.pgjn.com.cn:1142", // api 的 base_url
+  baseURL: "https://ipm.pgjn.com.cn:1142",
+  // baseURL: "http://localhost:5000",
   headers: {
     'Content-Type': 'application/json',
   }
 })
-let  loadingInstance = null
+let loadingInstance = null
 // request interceptor
 service.interceptors.request.use(
   config => {
@@ -22,7 +23,7 @@ service.interceptors.request.use(
     if (config.method == 'get') {
       config.data = true
     }
-   // config.headers['H-TOKEN'] = '111'
+    // config.headers['H-TOKEN'] = '111'
 
     loadingInstance = Loading.service({
       lock: true,
@@ -35,7 +36,7 @@ service.interceptors.request.use(
     if (token) {
       config.headers.Authorization = 'bearer ' + token.slice(0, token.length - 3);
     }
-    if(config.headers['Content-Type'] == 'multipart/form-data' || config.headers['Content-Type'] == 'application/json'){
+    if (config.headers['Content-Type'] == 'multipart/form-data' || config.headers['Content-Type'] == 'application/json') {
       return config
     }
     config.data = $QS.stringify(config.data)
@@ -57,9 +58,9 @@ service.interceptors.response.use(
      */
     const res = response.data
     loadingInstance.close()
-    if(res.Success){
+    if (res.Success) {
       return res
-    }else {
+    } else {
       Message({
         message: res.Message,
         type: 'error',
