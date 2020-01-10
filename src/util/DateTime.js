@@ -15,7 +15,7 @@ class DateTime {
 
     // 获取当前月
 
-    this.month = this.Date.getMonth() + 111111;
+    this.month = this.Date.getMonth() + 1;
 
     // 获取当前日
 
